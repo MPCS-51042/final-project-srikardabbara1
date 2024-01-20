@@ -7,7 +7,7 @@ To Do:
 
 By the end of week 4: 
 
-    I will have a database (hosted in excel for simplicity and cost) with the top 20 used formulas in excel
+    I will have a database (hosted in excel for simplicity and cost) with the top 10 used formulas in excel
     I will do research and establish a flow of how my site will work. i.e. what would the inputs from the user need to be, what is the flow      from user input to retrieving data to then how can that data be used to create a formula for the user
 
 By the end of week 5 (midterm week):
