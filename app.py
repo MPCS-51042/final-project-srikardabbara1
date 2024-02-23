@@ -247,34 +247,34 @@ def generate():
     - Output the form to prompt the user for the inputs required for the selected formula
     """
     formula = request.form.get('formula')
-    if formula == 'SUM': # Handle SUM option
+    if formula == 'SUM': #handle SUM option
         return render_template_string(SUM_TEMPLATE)
     
-    elif formula == 'IFERROR': # Handle IFERROR option
+    elif formula == 'IFERROR': #handle IFERROR option
         return render_template_string(IFERROR_TEMPLATE)
     
-    elif formula == 'COUNTIF':  # Handle COUNTIF option
+    elif formula == 'COUNTIF':  #handle COUNTIF option
         return render_template_string(COUNTIF_TEMPLATE)
     
-    elif formula == 'VLOOKUP':  # Handle VLOOKUP option
+    elif formula == 'VLOOKUP':  #handle VLOOKUP option
         return render_template_string(VLOOKUP_TEMPLATE)
     
-    elif formula == 'INDEXMATCH':  # Handle INDEX/MATCH option
+    elif formula == 'INDEXMATCH':  #handle INDEX/MATCH option
         return render_template_string(INDEX_MATCH_TEMPLATE)
     
-    elif formula == 'CONCATENATE':  # Handle CONCATENATE option
+    elif formula == 'CONCATENATE':  #handle CONCATENATE option
         return render_template_string(CONCATENATE_TEMPLATE)
     
-    elif formula == 'CHOOSE':  # Handle CHOOSE option
+    elif formula == 'CHOOSE':  #hndle CHOOSE option
         return render_template_string(CHOOSE_TEMPLATE)
     
-    elif formula == 'SUBSTITUTE':  # Handle SUBSTITUTE option
+    elif formula == 'SUBSTITUTE':  #handle SUBSTITUTE option
         return render_template_string(SUBSTITUTE_TEMPLATE)
     
-    elif formula == 'MINIF':  # Handle MINIF option
+    elif formula == 'MINIF':  #handle MINIF option
         return render_template_string(MINIF_TEMPLATE)
 
-    elif formula == 'MAXIF':  # Handle MAXIF option
+    elif formula == 'MAXIF':  #handle MAXIF option
         return render_template_string(MAXIF_TEMPLATE)
     
 
@@ -293,87 +293,87 @@ def result():
         if error:
             errors.append(error)
 
-    if formula == 'SUM':   # Generate SUM formula
+    if formula == 'SUM':   #generate SUM formula
         cell_range = request.form.get('range')
-        if errors:  # Check for errors
-            return jsonify({'errors': errors}), 400  # Return errors as JSON
+        if errors:  #check for errors
+            return jsonify({'errors': errors}), 400  #return errors as JSON
         formula_result = f"=SUM({cell_range})"
 
-    elif formula == 'IFERROR': # Generate IFERROR formula
+    elif formula == 'IFERROR': #generate IFERROR formula
         value = request.form.get('value')
         replacement = request.form.get('replacement')
-        if errors:  # Check for errors
-            return jsonify({'errors': errors}), 400  # Return errors as JSON
+        if errors: 
+            return jsonify({'errors': errors}), 400 
         formula_result = f"=IFERROR({value}, {replacement})"
 
-    elif formula == 'COUNTIF':  # Generate COUNTIF formula
+    elif formula == 'COUNTIF':  #generate COUNTIF formula
         cell_range = request.form.get('range')
         criteria = request.form.get('criteria')
-        if errors:  # Check for errors
-            return jsonify({'errors': errors}), 400  # Return errors as JSON
+        if errors:
+            return jsonify({'errors': errors}), 400 
         formula_result = f"=COUNTIF({cell_range}, \"{criteria}\")"
     
-    elif formula == 'VLOOKUP':  # Generate VLOOKUP formula
+    elif formula == 'VLOOKUP':  #generate VLOOKUP formula
         lookup_value = request.form.get('lookup_value')
         table_array = request.form.get('table_array')
         col_index_num = request.form.get('col_index_num')
         range_lookup = request.form.get('range_lookup')
-        if errors:  # Check for errors
-            return jsonify({'errors': errors}), 400  # Return errors as JSON
+        if errors:  
+            return jsonify({'errors': errors}), 400 
         formula_result = f'=VLOOKUP({lookup_value}, {table_array}, {col_index_num}, {range_lookup})'
 
-    elif formula == 'INDEXMATCH':  # Generate INDEX/MATCH formula
+    elif formula == 'INDEXMATCH':  #generate INDEX/MATCH formula
         index_range = request.form.get('index_range')
         lookup_value = request.form.get('lookup_value')
         match_range = request.form.get('match_range')
-        if errors:  # Check for errors
-            return jsonify({'errors': errors}), 400  # Return errors as JSON
+        if errors:  
+            return jsonify({'errors': errors}), 400  
         formula_result = f'=INDEX({index_range}, MATCH({lookup_value}, {match_range}, 0))'
 
-    elif formula == 'CONCATENATE':  # Generate CONCATENATE formula
+    elif formula == 'CONCATENATE':  #generate CONCATENATE formula
         first_value = request.form.get('first_value')
         second_value = request.form.get('second_value').split(',')
         values = [first_value] + second_value
         concatenated_values = ', '.join(values)
-        if errors:  # Check for errors
-            return jsonify({'errors': errors}), 400  # Return errors as JSON
+        if errors:  
+            return jsonify({'errors': errors}), 400  
         formula_result = f'=CONCATENATE({concatenated_values})'
 
-    elif formula == 'CHOOSE':  # Generate CHOOSE formula
+    elif formula == 'CHOOSE':  #generate CHOOSE formula
         index_num = request.form.get('index_num')
         values = request.form.get('values')
-        if errors:  # Check for errors
-            return jsonify({'errors': errors}), 400  # Return errors as JSON
+        if errors:  
+            return jsonify({'errors': errors}), 400  
         formula_result = f'=CHOOSE({index_num}, {values})'
 
-    elif formula == 'SUBSTITUTE':  # Generate SUBSTITUTE formula
+    elif formula == 'SUBSTITUTE':  #generate SUBSTITUTE formula
         text = request.form.get('text')
         old_text = request.form.get('old_text')
         new_text = request.form.get('new_text')
         instance_num = request.form.get('instance_num')
-        if errors:  # Check for errors
-            return jsonify({'errors': errors}), 400  # Return errors as JSON
-        if instance_num:  # If an instance number is provided
+        if errors:  
+            return jsonify({'errors': errors}), 400  
+        if instance_num:  #if an instance number is provided
             formula_result = f'=SUBSTITUTE({text}, {old_text}, {new_text}, {instance_num})'
-        else:  # If no instance number is provided, replace all occurrences
+        else:  #if no instance number is provided, replace all occurrences
             formula_result = f'=SUBSTITUTE({text}, {old_text}, {new_text})'
 
     elif formula == 'MINIF':  # Generate MINIF formula
         condition_range = request.form.get('condition_range')
         condition = request.form.get('condition')
         min_range = request.form.get('min_range')
-        # Simulating MINIF as Excel does not have a direct function
-        if errors:  # Check for errors
-            return jsonify({'errors': errors}), 400  # Return errors as JSON
+        #MINIF as Excel does not have a direct function
+        if errors:  
+            return jsonify({'errors': errors}), 400  
         formula_result = f'=MIN(IF({condition_range}{condition}, {min_range}))'
 
     else:  
         condition_range = request.form.get('condition_range')
         condition = request.form.get('condition')
         max_range = request.form.get('max_range')
-        # Simulating MAXIF
-        if errors:  # Check for errors
-            return jsonify({'errors': errors}), 400  # Return errors as JSON
+        #simulating MAXIF
+        if errors: 
+            return jsonify({'errors': errors}), 400  
         formula_result = f'=MAX(IF({condition_range}{condition}, {max_range}))'
     
     return f"<h2>Your Excel formula: {formula_result}</h2><br><a href='/'>Back to Home</a>"
